@@ -37,15 +37,13 @@ while (true) {
   let calculateNow = input.endsWith('=');
   input = input.replace('=', '');
   storedInput += input;
-  console.log("stored input: ", storedInput);
 
   if (calculateNow) {
     //we have a complete equation
-    console.log("Calculate now");
     let tokens = tokenizeInput(storedInput);
-    console.log("Operator stack: ", tokens);
     let result = calculateStack(tokens);
-    console.log("Result: ", result);
+    //5. output result
+    console.log(result);
     //4. store result
     storedValue = result;
     storedInput = "" + result;
@@ -56,25 +54,18 @@ while (true) {
     console.log(lastOperand);
   }
 
-  //5. output result
-  console.log(storedValue);
 }
 
 //Functions
 function processNegative(input) {
-  console.log("processing for negative: ", input);
   //use regex to check for the number of consecutive bangs
   const negated = input.replace(/(!*)(\d+)/g, (_, negations, number) => {
     let negationCount = negations.length;
-    console.log("NEG Count: ", negationCount);
-    const negativeNum = negationCount % 2 ? (number * -1) : number;
-    console.log("Neg result: ", negativeNum);
-    return negativeNum;
+    return negationCount % 2 ? (number * -1) : number;
   });
 
   return negated;
 }
-
 
 function tokenizeInput(input) {
   // We need to tokenize the input into operators and operands
