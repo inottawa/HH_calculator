@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/inottawa/HH_calculator/issues"
   },
-  "homepage": "https://github.com/inottawa/HH_calculator#readme"
+  "homepage": "https://github.com/inottawa/HH_calculator#readme",
+  "dependencies": {
+    "readline-sync": "^1.4.10"
+  }
 }
