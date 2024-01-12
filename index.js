@@ -8,11 +8,12 @@
 // the user should '^C' to end the program
 
 let readlineSync = require('readline-sync'), storedValue = 0;
+const operatorDMAS = {'/': 2, '*': 2, '+': 1, '-': 1};
 
 //Lets go!
 console.log(storedValue);
 //1. take input
-let input = readlineSync.prompt();
+let input = "25-10*5";//readlineSync.prompt();
 
 //2. validate input
 // The only valid characters are: digits, 'c', '+', '-', '*', '/', '!', '='
@@ -22,6 +23,30 @@ let input = readlineSync.prompt();
 //3. process input
 // We need to tokenize the input into operators and operands
 // we need to sort the ranking of the operands according to 'DMAS'
+// lets use regex to break up the tokens and add them to a queue to be processed
+let tokens = [];
+let operatorStack = [];
+input.replace(/\s/g, '').split(/([\+\-\*\/\!\=])/).forEach(token => {
+  console.log("TOKEN: ", token);
+  //check if this is a operator or operand
+  if (parseFloat(token)) {
+    //this is an operand
+    tokens.push(token);
+  } else if (token in operatorDMAS) {
+    //confirmed operator - check DMAS
+    while (operatorStack.length && operatorDMAS[operatorStack[operatorStack.length - 1]] >= operatorDMAS[token]) {
+      tokens.push(operatorStack.pop());
+    }
+    operatorStack.push(token);
+  }
+});
+
+while (operatorStack.length) {
+  tokens.push(operatorStack.pop());
+}
+
+console.log("Operator stack: ", tokens);
+
 
 //4. store result
 
