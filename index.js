@@ -12,42 +12,53 @@ const operatorDMAS = {'/': 2, '*': 2, '+': 1, '-': 1};
 
 //Lets go!
 console.log(storedValue);
-//1. take input
-let input = "5.2+8/2-1*4=";//readlineSync.prompt();
-// let input = "25-10*5";
-// let input = "5.2+8/2-1*4";
+while (true) {
+  //1. take input
+  let input = readlineSync.prompt();
+  // let input = "25-10*5";
+  // let input = "5.2+8/2-1*4";
+  // let input = "5.2+8/2-1*4=";
 
-//2. validate input
-// The only valid characters are: digits, 'c', '+', '-', '*', '/', '!', '='
-//throw an error on validate, or clear out the invalid characters
-//remove any '=' that are not at the end of the input
+  //2. validate input
+  // The only valid characters are: digits, 'c', '+', '-', '*', '/', '!', '='
+  //throw an error on validate, or clear out the invalid characters
+  //remove any '=' that are not at the end of the input
 
-//3. process input
-let calculateNow = input.endsWith('=');
-input = input.replace('=', '');
-storedInput += input;
-console.log("stored input: ", storedInput);
+  //3. process input
+  //check for clear
+  if (input.toLowerCase() == 'c') {
+    storedValue = 0;
+    storedInput = "";
+    console.log(storedValue);
+    continue;
+  }
 
-if (calculateNow) {
-  //we have a complete equation
-  console.log("Calculate now");
-  let tokens = tokenizeInput(input);
-  console.log("Operator stack: ", tokens);
-  let result = calculateStack(tokens);
-  console.log("Result: ", result);
-  //4. store result
-  storedValue = result;
-  storedInput = "" + result;
-} else {
-  //we have an incomplete equation
-  let tokens = tokenizeInput(input);
-  let lastOperand = tokens.filter(token =>!isNaN(token)).pop();
-  console.log(lastOperand);
+
+  let calculateNow = input.endsWith('=');
+  input = input.replace('=', '');
+  storedInput += input;
+  console.log("stored input: ", storedInput);
+
+  if (calculateNow) {
+    //we have a complete equation
+    console.log("Calculate now");
+    let tokens = tokenizeInput(storedInput);
+    console.log("Operator stack: ", tokens);
+    let result = calculateStack(tokens);
+    console.log("Result: ", result);
+    //4. store result
+    storedValue = result;
+    storedInput = "" + result;
+  } else {
+    //we have an incomplete equation
+    let tokens = tokenizeInput(storedInput);
+    let lastOperand = tokens.filter(token =>!isNaN(token)).pop();
+    console.log(lastOperand);
+  }
+
+  //5. output result
+  console.log(storedValue);
 }
-
-//5. output result
-console.log(storedValue);
-
 
 //Functions
 function tokenizeInput(input) {
