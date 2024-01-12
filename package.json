@@ -1,0 +1,22 @@
+{
+  "name": "hh_calculator",
+  "version": "0.0.1",
+  "description": "Simple Calculator - Flexing the brain",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inottawa/HH_calculator.git"
+  },
+  "keywords": [
+    "fun"
+  ],
+  "author": "Ryan Spears",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/inottawa/HH_calculator/issues"
+  },
+  "homepage": "https://github.com/inottawa/HH_calculator#readme"
+}
