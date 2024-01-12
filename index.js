@@ -106,6 +106,7 @@ function tokenizeInput(input) {
 }
 
 function calculateStack(tokenStack) {
+  //TODO: we should validate here.. I've run out of time
   //now that we've tokenized and sorted the tokens, we can process the token queue
   let stack = [];
   tokenStack.forEach(token => {
@@ -113,30 +114,15 @@ function calculateStack(tokenStack) {
       //first operand
       stack.push(parseFloat(token));
     } else {
-      //operator
-      let operand2 = stack.pop();
-      let operand1 = stack.pop();
-      let result = 0;
+      //operator - grab the previous operands and MATH!
+      let [operand2, operand1] = [stack.pop(), stack.pop()];
       switch (token) {
-        case '+':
-          result = operand1 + operand2;
-          break;
-        case '-':
-          result = operand1 - operand2;
-          break;
-        case '*':
-          result = operand1 * operand2;
-          break;
-        case '/':
-          result = operand1 / operand2;
-          break;
-        default:
-          break;
+        case '+': stack.push(operand1 + operand2); break;
+        case '-': stack.push(operand1 - operand2); break;
+        case '*': stack.push(operand1 * operand2); break;
+        case '/': stack.push(operand1 / operand2); break;
       }
-      stack.push(result);
     }
-
   });
-
-return stack.pop();
+  return stack.pop();
 }
