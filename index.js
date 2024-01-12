@@ -61,14 +61,30 @@ while (true) {
 }
 
 //Functions
+function processNegative(input) {
+  console.log("processing for negative: ", input);
+  //use regex to check for the number of consecutive bangs
+  const negated = input.replace(/(!*)(\d+)/g, (_, negations, number) => {
+    let negationCount = negations.length;
+    console.log("NEG Count: ", negationCount);
+    const negativeNum = negationCount % 2 ? (number * -1) : number;
+    console.log("Neg result: ", negativeNum);
+    return negativeNum;
+  });
+
+  return negated;
+}
+
+
 function tokenizeInput(input) {
   // We need to tokenize the input into operators and operands
   // we need to sort the ranking of the operands according to 'DMAS'
   // lets use regex to break up the tokens and add them to a queue to be processed
   let tokens = [];
   let operatorStack = [];
-  input.replace(/\s/g, '').split(/([\+\-\*\/\!\=])/).forEach(token => {
-    console.log("TOKEN: ", token);
+  input.replace(/\s/g, '').split(/([\+\-\*\/])/).forEach(token => {
+    //we need the negative unary operator to be part of the token but not part of the split
+    token = processNegative(token);
     //check if this is a operator or operand
     if (parseFloat(token)) {
       //this is an operand
@@ -93,7 +109,6 @@ function calculateStack(tokenStack) {
   //now that we've tokenized and sorted the tokens, we can process the token queue
   let stack = [];
   tokenStack.forEach(token => {
-    console.log("Processing token: ", token, " with stack: ", stack);
     if (parseFloat(token)) {
       //first operand
       stack.push(parseFloat(token));
@@ -118,7 +133,6 @@ function calculateStack(tokenStack) {
         default:
           break;
       }
-      console.log("RESULT: ", result);
       stack.push(result);
     }
 
