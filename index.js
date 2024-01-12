@@ -47,6 +47,42 @@ while (operatorStack.length) {
 
 console.log("Operator stack: ", tokens);
 
+//now that we've tokenized and sorted the tokens, we can process the token queue
+let stack = [];
+tokens.forEach(token => {
+  console.log("Processing token: ", token, " with stack: ", stack);
+  if (parseFloat(token)) {
+    //first operand
+    stack.push(parseFloat(token));
+  } else {
+    //operator
+    let operand2 = stack.pop();
+    let operand1 = stack.pop();
+    let result = 0;
+    switch (token) {
+      case '+':
+        result = operand1 + operand2;
+        break;
+      case '-':
+        result = operand1 - operand2;
+        break;
+      case '*':
+        result = operand1 * operand2;
+        break;
+      case '/':
+        result = operand1 / operand2;
+        break;
+      default:
+        break;
+    }
+    console.log("RESULT: ", result);
+    stack.push(result);
+  }
+
+});
+
+storedValue = stack.pop();
+
 
 //4. store result
 
